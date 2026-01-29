@@ -14,6 +14,6 @@ router.post("/", (req, res) => {
   return res.status(StatusCodes.BAD_REQUEST).json(req.body);
 });
 
-router.post("/cities", CitiesController.create);
+router.post("/cities", CitiesController.createValidation, CitiesController.create);
 
 export { router };
