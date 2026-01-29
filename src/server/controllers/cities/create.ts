@@ -6,13 +6,9 @@ const bodyValidator = z.object({
   name: z.string().min(3),
   state: z.string().min(2),
 });
-const queryValidator = z.object({
-  filter: z.string().min(3),
-});
 type NewCity = z.infer<typeof bodyValidator>;
 export const createValidation = validation(() => ({
-  body: bodyValidator,
-  query: queryValidator,
+  body: bodyValidator
 }));
 export const create = (req: Request<{}, {}, NewCity>, res: Response) => {
   console.log(req.body);

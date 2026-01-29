@@ -15,5 +15,6 @@ router.post("/", (req, res) => {
 });
 
 router.post("/cities", CitiesController.createValidation, CitiesController.create);
+router.get("/cities", CitiesController.getAllValidation, CitiesController.getAll);
 
 export { router };

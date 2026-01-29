@@ -1,5 +1,7 @@
-import * as create from './create'
+import * as create from './getAll'
+import * as getAll from './create'
 
 export const CitiesController = {
-  ...create
+  ...create,
+  ...getAll,
 }
