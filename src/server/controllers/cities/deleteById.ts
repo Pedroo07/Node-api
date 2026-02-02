@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { validation } from "../../shared/middlewares";
 import z from "zod";
+import { StatusCodes } from "http-status-codes";
 
 const IdValidator = z.object({
  id: z.coerce.number().gt(0).int().optional()
@@ -10,8 +11,12 @@ export const deleteByIdValidation = validation(() => ({
   params: IdValidator
 }));
 export const deleteById = async (req: Request<QueryProps>, res: Response) => {
-  console.log(req.params);
+  if(Number(req.params.id) === 99999) return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+    errors: {
+      default: 'Register not found'
+    }
+  })
 
-  return res.send("deleteById");
+  return res.status(StatusCodes.NO_CONTENT).send();
 };
- 
+  

@@ -1,4 +1,5 @@
 import { RequestHandler } from "express";
+import { StatusCodes } from "http-status-codes";
 import z, { flattenError } from "zod";
 type TFields = "body" | "query" | "params" | "header";
 type TGetSchema = <T>(schema: z.infer<T>) => z.infer<T>;
@@ -13,13 +14,13 @@ export const validation: TValidation =
     Object.entries(schemas).forEach(([key, s]) => {
       const result = s.safeParse(req[key as TFields]);
       if (!result.success) {
-        const tree = flattenError(result.error);
+        const tree = z.flattenError(result.error);
         errorsResult[key] = tree.fieldErrors;
       }
     });
     if (Object.entries(errorsResult).length === 0) {
       return next();
     } else {
-      return res.status(400).json({ errors: errorsResult });
+      return res.status(StatusCodes.BAD_REQUEST).json({ errors: errorsResult });
     }
   };

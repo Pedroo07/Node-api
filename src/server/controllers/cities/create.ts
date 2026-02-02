@@ -4,7 +4,6 @@ import { validation } from "../../shared/middlewares";
 
 const bodyValidator = z.object({
   name: z.string().min(3),
-  state: z.string().min(2),
 });
 type NewCity = z.infer<typeof bodyValidator>;
 export const createValidation = validation(() => ({
@@ -13,5 +12,5 @@ export const createValidation = validation(() => ({
 export const create = (req: Request<{}, {}, NewCity>, res: Response) => {
   console.log(req.body);
 
-  return res.send("City created");
+  return res.status(201).json(1);
 };
