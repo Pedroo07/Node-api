@@ -3,7 +3,7 @@ import z from "zod";
 import { validation } from "../../shared/middlewares";
 
 const bodyValidator = z.object({
-  name: z.string().min(3),
+  nome: z.string().min(3),
 });
 type NewCity = z.infer<typeof bodyValidator>;
 export const createValidation = validation(() => ({

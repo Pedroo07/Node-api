@@ -20,6 +20,6 @@ export const getById = async (req: Request<QueryProps>, res: Response) => {
 
   return res.status(StatusCodes.OK).json({
     id: req.params.id,
-    name: "Monte Azul",
+    nome: "Monte Azul",
   });
 };

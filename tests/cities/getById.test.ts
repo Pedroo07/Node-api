@@ -11,7 +11,7 @@ describe("cities - getById", () => {
     const resFound = await testServer.get(`/cities/${res1.body}`).send();
 
     expect(resFound.statusCode).toEqual(StatusCodes.OK);
-    expect(resFound.body).toHaveProperty("name");
+    expect(resFound.body).toHaveProperty("nome");
   });
   it("Trying to find a record that doesn t exist.", async () => {
     const res1 = await testServer.get("/cities/99999").send();

@@ -7,7 +7,7 @@ const IdValidator = z.object({
  id: z.coerce.number().gt(0).int().optional()
 });
 const IdBodyValidator = z.object({
-name: z.string().min(3)
+nome: z.string().min(3)
 });
 type QueryProps = z.infer<typeof IdValidator>;
 type BodyProps = z.infer<typeof IdBodyValidator>;
@@ -23,6 +23,6 @@ export const updateById = async (req: Request<QueryProps, {}, BodyProps>, res: R
        },
      });
 
-  return res.status(StatusCodes.NOT_FOUND).send();
+  return res.status(StatusCodes.NO_CONTENT).send();
 };
  
