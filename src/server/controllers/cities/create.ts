@@ -7,7 +7,7 @@ const bodyValidator = z.object({
 });
 type NewCity = z.infer<typeof bodyValidator>;
 export const createValidation = validation(() => ({
-  body: bodyValidator
+  body: bodyValidator,
 }));
 export const create = (req: Request<{}, {}, NewCity>, res: Response) => {
   console.log(req.body);
