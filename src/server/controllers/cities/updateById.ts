@@ -7,7 +7,7 @@ const IdValidator = z.object({
   id: z.coerce.number().gt(0).int().optional(),
 });
 const IdBodyValidator = z.object({
-  nome: z.string().min(3),
+  name: z.string().min(3),
 });
 type QueryProps = z.infer<typeof IdValidator>;
 type BodyProps = z.infer<typeof IdBodyValidator>;

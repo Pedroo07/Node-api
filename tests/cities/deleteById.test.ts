@@ -9,7 +9,7 @@ describe('Cities - deleteById', () => {
 
     const res1 = await testServer
       .post('/cities')
-      .send({ nome: 'Monte Azul' });
+      .send({ name: 'Monte Azul' });
 
     expect(res1.statusCode).toEqual(StatusCodes.CREATED);
 

@@ -9,7 +9,7 @@ describe('cities - getAll', () => {
 
     const res1 = await testServer
       .post('/cities')
-      .send({ nome: 'Monte Azul' });
+      .send({ name: 'Monte Azul' });
 
       console.log(res1.statusCode)
     expect(res1.statusCode).toEqual(StatusCodes.CREATED);

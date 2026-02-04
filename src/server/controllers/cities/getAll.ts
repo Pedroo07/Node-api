@@ -22,7 +22,7 @@ export const getAll = async (
   return res.status(StatusCodes.OK).json([
     {
       id: 1,
-      nome: "Monte Azul",
+      name: "Monte Azul",
     },
   ]);
 };
