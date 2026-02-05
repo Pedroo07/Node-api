@@ -1,9 +1,12 @@
 import { Request, Response } from "express";
 import z from "zod";
 import { validation } from "../../shared/middlewares";
+import { ICity } from "../../database/models";
 
-const bodyValidator = z.object({
-  name: z.string().min(3),
+interface BodyProps extends Omit<ICity, 'id'> {}
+
+const bodyValidator: z.ZodType<BodyProps> = z.object({
+  name: z.coerce.string(),
 });
 type NewCity = z.infer<typeof bodyValidator>;
 export const createValidation = validation(() => ({
