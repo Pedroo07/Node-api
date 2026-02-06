@@ -1,4 +1,4 @@
-import { Request, Response } from "express";
+import { Request, Response, RequestHandler } from "express";
 import { validation } from "../../shared/middlewares";
 import z from "zod";
 import { StatusCodes } from "http-status-codes";
@@ -9,13 +9,10 @@ const queryValidator = z.object({
   filter: z.string().optional(),
 });
 type QueryProps = z.infer<typeof queryValidator>;
-export const getAllValidation = validation(() => ({
+export const getAllValidation: RequestHandler<any, any, any, QueryProps> = validation(() => ({
   query: queryValidator,
-}));
-export const getAll = async (
-  req: Request<{}, {}, {}, QueryProps>,
-  res: Response,
-) => {
+})) as RequestHandler<any, any, any, QueryProps>;
+export const getAll: RequestHandler<{}, any, {}, QueryProps> = async (req, res) => {
   res.setHeader("Access-Control-Expose-Headers", "x-total-count");
   res.setHeader("x-total-count", "1");
 
