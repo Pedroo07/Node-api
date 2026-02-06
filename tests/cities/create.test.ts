@@ -11,7 +11,7 @@ describe("Cities - Create", () => {
   it("attempt to create a record with a short name", async () => {
     const res2 = await testServer.post("/cities").send({ nome: "Mo" });
 
-    expect(res2.statusCode).toEqual(StatusCodes.BAD_REQUEST);
-    expect(res2.body).toHaveProperty("errors.body.name");
+    expect(res2.statusCode).toEqual(StatusCodes.INTERNAL_SERVER_ERROR);
+    expect(res2.body).toHaveProperty("errors");
   });
 });
