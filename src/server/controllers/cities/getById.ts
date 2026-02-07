@@ -1,4 +1,4 @@
-import { Request, Response, RequestHandler } from "express";
+import { RequestHandler } from "express";
 import { validation } from "../../shared/middlewares";
 import z from "zod";
 import { StatusCodes } from "http-status-codes";
