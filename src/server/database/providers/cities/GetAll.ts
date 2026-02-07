@@ -9,8 +9,15 @@ export type CityQueryParams = {
 
 export const getAll = async (City: CityQueryParams) => {
   try {
-    const result = await Knex(ETableNames.city).select("*");
-    if (result.length === 0) {
+    const result = Knex(ETableNames.city).select("*");
+    if(typeof City.limit === 'number'){
+      result.limit(City.limit)
+    }if (typeof City.page === 'number'){
+      return result.offset((City.page - 1) * (await result).length)
+    }if(City.filter){
+      result.where('name', 'like', `%${City.filter}%`)
+    }
+    else if ((await result).length === 0) {
       return new Error("Not found City");
     }
     return result
