@@ -1,5 +1,4 @@
-import { Request, Response } from "express";
-import { validation } from "../../shared/middlewares";
+import { Response } from "express";
 import z from "zod";
 import { StatusCodes } from "http-status-codes";
 import { CitiesProvider } from "../../database/providers";
@@ -15,7 +14,6 @@ export const getAll = async (
   req: GetAllCityRequest,
   res:Response
 ) => {
-  console.log(req.query)
   const result = await CitiesProvider.getAll(req.query);
   res.setHeader("Access-Control-Expose-Headers", "x-total-count");
   res.setHeader("x-total-count", "1");

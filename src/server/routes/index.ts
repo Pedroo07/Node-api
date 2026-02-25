@@ -3,6 +3,7 @@ import { StatusCodes } from "http-status-codes";
 import { CitiesController } from "./../controllers";
 import validate from 'express-zod-safe';
 import { queryValidator } from "../controllers/cities/getAll";
+import { IdValidator } from "../controllers/cities/deleteById";
 
 const router = Router();
 
@@ -19,6 +20,6 @@ router.post("/cities", CitiesController.createValidation, CitiesController.creat
 router.get("/cities",validate({query: queryValidator}) , CitiesController.getAll);
 router.get("/cities/:id", CitiesController.getByIdValidation, CitiesController.getById);
 router.put("/cities/:id", CitiesController.updateByIdValidation, CitiesController.updateById);
-router.delete("/cities/:id", CitiesController.deleteByIdValidation, CitiesController.deleteById);
+router.delete("/cities/:id", validate({params: IdValidator}), CitiesController.deleteById);
 
 export { router };

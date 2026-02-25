@@ -17,7 +17,7 @@ describe("cities - updateById", () => {
   it("Trying to update a non-existent record.", async () => {
     const res1 = await testServer.put("/cities/99999").send({ name: "Monte" });
 
-    expect(res1.statusCode).toEqual(StatusCodes.INTERNAL_SERVER_ERROR);
+    expect(res1.statusCode).toEqual(StatusCodes.NOT_FOUND);
     expect(res1.body).toHaveProperty("errors.default");
   });
 });

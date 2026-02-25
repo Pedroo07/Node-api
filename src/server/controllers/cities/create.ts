@@ -26,6 +26,5 @@ export const create = async (req: Request<{}, {}, NewCity>, res: Response) => {
       },
     });
   }
-
   return res.status(201).json(result);
 };

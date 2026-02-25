@@ -1,8 +1,9 @@
-import { Request, Response, RequestHandler } from "express";
+import {  RequestHandler } from "express";
 import { validation } from "../../shared/middlewares";
 import z from "zod";
 import { StatusCodes } from "http-status-codes";
 import { ICity } from "../../database/models";
+import { CitiesProvider } from "../../database/providers";
 interface IBodyProps extends Omit<ICity, "id"> {}
 
 const IdValidator = z.object({
@@ -22,12 +23,20 @@ export const updateById: RequestHandler<QueryProps, any, BodyProps> = async (
   req,
   res,
 ) => {
-  if (Number(req.params.id) === 99999)
+  const result = await CitiesProvider.updateById(req.params.id, req.body);
+  if (result instanceof Error)
     return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+      errors: {
+        default: result.message,
+      },
+    });
+
+  if (result === 0)
+    return res.status(StatusCodes.NOT_FOUND).json({
       errors: {
         default: "Register not found",
       },
     });
 
-  return res.status(StatusCodes.NO_CONTENT).send();
+  return res.status(StatusCodes.NO_CONTENT).json(result);
 };

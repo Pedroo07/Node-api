@@ -1,20 +1,25 @@
-import { Request, Response, RequestHandler } from "express";
-import { validation } from "../../shared/middlewares";
+import { Response } from "express";
 import z from "zod";
 import { StatusCodes } from "http-status-codes";
+import { CitiesProvider } from "../../database/providers";
+import { ValidatedRequest } from "express-zod-safe";
 
-const IdValidator = z.object({
+export const IdValidator = z.object({
   id: z.coerce.number().gt(0).int(),
 });
-type QueryProps = z.infer<typeof IdValidator>;
-export const deleteByIdValidation: RequestHandler<QueryProps> = validation(
-  () => ({
-    params: IdValidator,
-  }),
-) as RequestHandler<QueryProps>;
-export const deleteById: RequestHandler<QueryProps> = async (req, res) => {
-  if (Number(req.params.id) === 99999)
+
+type GetIdCityRequest = ValidatedRequest<{params: typeof IdValidator}>
+
+export const deleteById = async (req: GetIdCityRequest, res: Response) => {
+  const result = await CitiesProvider.deleteById(req.params.id);
+  if (result instanceof Error)
     return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+      errors: {
+        default: result.message,
+      },
+    });
+     if (result === 0)
+    return res.status(StatusCodes.NOT_FOUND).json({
       errors: {
         default: "Register not found",
       },

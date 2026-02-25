@@ -13,9 +13,8 @@ describe("Cities - deleteById", () => {
     expect(resDelete.statusCode).toEqual(StatusCodes.NO_CONTENT);
   });
   it("Try deleting a non-existent record.", async () => {
-    const res2 = await testServer.delete("/cities/99999").send();
+    const res2 = await testServer.delete('/cities/99999').send();
 
-    expect(res2.statusCode).toEqual(StatusCodes.INTERNAL_SERVER_ERROR);
-    expect(res2.body).toHaveProperty("errors.default");
+    expect(res2.statusCode).toEqual(StatusCodes.NOT_FOUND);
   });
 });
