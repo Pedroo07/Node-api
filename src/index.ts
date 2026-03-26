@@ -7,9 +7,15 @@ const StartServer = () => {
 };
 
 if (process.env.IS_LOCALHOST !== "true") {
-  Knex.migrate.latest().then(() => {
-    StartServer()
-  }).catch(console.log)
-}else{
-  StartServer()
+  Knex.migrate
+    .latest()
+    .then(() => {
+      Knex.seed
+        .run()
+        .then(() => StartServer())
+        .catch(console.log);
+    })
+    .catch(console.log);
+} else {
+  StartServer();
 }
