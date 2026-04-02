@@ -1,25 +1,25 @@
 import { Request, Response, RequestHandler } from "express";
 import z from "zod";
 import { validation } from "../../shared/middlewares";
-import { IPerson } from "../../database/models";
-import { PeopleProvider } from "../../database/providers";
+import { IUser } from "../../database/models";
 import { StatusCodes } from "http-status-codes";
+import { UserProvider } from "../../database/providers/users";
 
-interface BodyProps extends Omit<IPerson, "id"> {}
+interface BodyProps extends Omit<IUser, "id"> {}
 
 const bodyValidator: z.ZodType<BodyProps> = z.object({
   name: z.coerce.string().min(3),
-  cityId: z.coerce.number().int().min(1),
-  email: z.email(),
+  password: z.coerce.string().min(8),
+  email: z.email()
 });
-type NewCity = z.infer<typeof bodyValidator>;
-export const createValidation: RequestHandler<{}, any, NewCity> = validation(
+type NewUser = z.infer<typeof bodyValidator>;
+export const SignUpValidation: RequestHandler<{}, any, NewUser> = validation(
   () => ({
     body: bodyValidator,
   }),
-) as RequestHandler<{}, any, NewCity>;
-export const create = async (req: Request<{}, {}, NewCity>, res: Response) => {
-  const result = await PeopleProvider.createPerson(req.body);
+) as RequestHandler<{}, any, NewUser>;
+export const SignUp = async (req: Request<{}, {}, NewUser>, res: Response) => {
+  const result = await UserProvider.createUser(req.body);
 
   if (result instanceof Error) {
     return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({

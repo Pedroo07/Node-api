@@ -1,12 +1,12 @@
 import { ETableNames } from "../../ETableNames";
 import { Knex } from "../../knex";
-import { IPerson } from "../../models";
+import { IUser } from "../../models";
 
-export const createPerson = async (
-  person: Omit<IPerson, "id">,
+export const createUser = async (
+  user: Omit<IUser, "id">,
 ): Promise<number | Error> => {
   try {
-    const [result] = await Knex(ETableNames.person).insert(person).returning("id");
+    const [result] = await Knex(ETableNames.user).insert(user).returning("id");
     if (typeof result === "object") {
       return result.id;
     } else if (typeof result === "number") {

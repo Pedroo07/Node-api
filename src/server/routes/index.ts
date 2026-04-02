@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { CitiesController, PeopleController } from "./../controllers";
+import { CitiesController, PeopleController,UserController } from "./../controllers";
 import validate from 'express-zod-safe';
 import { queryValidator } from "../controllers/cities/getAll";
 import { IdValidator } from "../controllers/cities/deleteById";
@@ -21,5 +21,8 @@ router.get("/people",validate({query: queryValidator}) , PeopleController.getAll
 router.get("/people/:id", PeopleController.getByIdValidation, PeopleController.getById);
 router.put("/people/:id", PeopleController.updateByIdValidation, PeopleController.updateById);
 router.delete("/people/:id", validate({params: IdValidator}), PeopleController.deleteById);
+
+router.post("/signUp", UserController.SignUp, UserController.SignUpValidation)
+router.post("/signIn", UserController.SignIn, UserController.signInValidation)
 
 export { router };
